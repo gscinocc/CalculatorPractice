@@ -3,6 +3,8 @@ package com.example.Calculator.HelloApplication;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -14,7 +16,7 @@ public class Calculator extends Application {
     private String term1 = "";
     private String term2 = "";
     private char operator = ' ';
-    private double resultLabel;
+    private Label resultLabel = new Label("Result");
     private javafx.scene.control.Label display = new javafx.scene.control.Label();
 
     public static void main(String[] args) {
@@ -28,7 +30,6 @@ public class Calculator extends Application {
         Scene scene = new Scene(grid, 400, 400);
         stage.setTitle("Calculator");
 
-        //GridPane grid = new GridPane(); //Creates grid to organize UI elements
         grid.setHgap(10);//Sets Horizontal Distance between UI elements
         grid.setVgap(10); //Sets Vertical Distance between UI elements
         grid.setPadding(new Insets(10, 10, 10, 10)); //Distance from edge of open tab (V3 is left side)
@@ -37,47 +38,76 @@ public class Calculator extends Application {
         GridPane.setConstraints(display, 1, 4, 3, 1);
         grid.getChildren().add(display);
 
+        //Create number buttons
         Button num1 = new Button("1");
         num1.setOnAction(e->getNumber("1"));
-        GridPane.setConstraints(num1, 1, 0);
+        GridPane.setConstraints(num1, 1, 1);
 
         Button num2 = new Button("2");
         num2.setOnAction(e->getNumber("2"));
-        GridPane.setConstraints(num2, 2, 0);
+        GridPane.setConstraints(num2, 2, 1);
 
         Button num3 = new Button("3");
         num3.setOnAction(e->getNumber("3"));
-        GridPane.setConstraints(num3, 3, 0);
+        GridPane.setConstraints(num3, 3, 1);
 
         Button num4 = new Button("4");
         num4.setOnAction(e->getNumber("4"));
-        GridPane.setConstraints(num4, 1, 1);
+        GridPane.setConstraints(num4, 1, 2);
 
         Button num5 = new Button("5");
         num5.setOnAction(e->getNumber("5"));
-        GridPane.setConstraints(num5, 2, 1);
+        GridPane.setConstraints(num5, 2, 2);
 
         Button num6 = new Button("6");
         num6.setOnAction(e->getNumber("6"));
-        GridPane.setConstraints(num6, 3, 1);
+        GridPane.setConstraints(num6, 3, 2);
 
         Button num7 = new Button("7");
         num7.setOnAction(e->getNumber("7"));
-        GridPane.setConstraints(num7, 1, 2);
+        GridPane.setConstraints(num7, 1, 3);
 
         Button num8 = new Button("8");
         num8.setOnAction(e->getNumber("8"));
-        GridPane.setConstraints(num8, 2, 2);
+        GridPane.setConstraints(num8, 2, 3);
 
         Button num9 = new Button("9");
         num9.setOnAction(e->getNumber("9"));
-        GridPane.setConstraints(num9, 3, 2);
+        GridPane.setConstraints(num9, 3, 3);
 
         Button num0 = new Button("0");
         num0.setOnAction(e->getNumber("0"));
-        GridPane.setConstraints(num0, 2, 3);
+        GridPane.setConstraints(num0, 2, 4);
 
-        grid.getChildren().addAll(num1, num2, num3, num4, num5, num6, num7, num8, num9, num0);
+        //Create Operator Buttons
+        Button add = new Button("+");
+        add.setOnAction(e->getOperator('+'));
+        GridPane.setConstraints(add, 4, 1);
+
+        Button subtract = new Button("-");
+        subtract.setOnAction(e->getOperator('-'));
+        GridPane.setConstraints(subtract, 4, 2);
+
+        Button multiply = new Button("*");
+        multiply.setOnAction(e->getOperator('*'));
+        GridPane.setConstraints(multiply, 4, 3);
+
+        Button divide = new Button("/");
+        divide.setOnAction(e->getOperator('/'));
+        GridPane.setConstraints(divide, 4, 4);
+
+        Button equal = new Button("=");
+        equal.setOnAction(e->performOperation('='));
+        GridPane.setConstraints(equal, 3, 4);
+
+        //Create Clear Button
+        Button AC = new Button("AC");
+        add.setOnAction(e->clear('A'));
+        GridPane.setConstraints(AC, 0, 4);
+
+        GridPane.setConstraints(resultLabel, 0, 0);
+
+        grid.getChildren().addAll(num1, num2, num3, num4, num5, num6, num7, num8, num9, num0, add, subtract, multiply, divide, equal, resultLabel, AC);
         stage.setScene(scene);
         stage.show();
     }
@@ -133,7 +163,13 @@ public class Calculator extends Application {
                 result = num1+num2;
             }
         }
-        resultLabel = result;
+        resultLabel.setText(String.valueOf(result));
+
+    }
+    public void clear(char AC){
+        term1 = "";
+        term2 = "";
+        resultLabel.setText("Result");
     }
 }
 
