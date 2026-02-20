@@ -102,7 +102,7 @@ public class Calculator extends Application {
 
         //Create Clear Button
         Button AC = new Button("AC");
-        add.setOnAction(e->clear('A'));
+        AC.setOnAction(e->clear('A'));
         GridPane.setConstraints(AC, 0, 4);
 
         GridPane.setConstraints(resultLabel, 0, 0);
@@ -115,9 +115,6 @@ public class Calculator extends Application {
     public void getNumber(String num){
         if (operator == ' '){
             term1 += num;
-        }
-        else if (operator == '='){
-            //Do the result
         }
         else{
             term2 +=num;
@@ -160,15 +157,16 @@ public class Calculator extends Application {
             }
             else if (operator == '/'){
                 //Divide
-                result = num1+num2;
+                result = num1/num2;
             }
         }
         resultLabel.setText(String.valueOf(result));
-
+        //clear('A');
     }
     public void clear(char AC){
         term1 = "";
         term2 = "";
+        operator = ' ';
         resultLabel.setText("Result");
     }
 }
